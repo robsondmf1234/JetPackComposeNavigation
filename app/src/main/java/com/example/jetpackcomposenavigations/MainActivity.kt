@@ -29,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcomposenavigations.model.BottomAppBarItem
 import com.example.jetpackcomposenavigations.ui.components.PanucciBottomAppBar
 import com.example.jetpackcomposenavigations.ui.screens.CheckoutScreen
@@ -41,6 +42,8 @@ import com.example.jetpackcomposenavigations.utils.bottomAppBarItems
 import com.example.jetpackcomposenavigations.utils.sampleProductWithImage
 import com.example.jetpackcomposenavigations.utils.sampleProducts
 
+const val TAG = "MainActivity"
+
 //TODO("https://cursos.alura.com.br/classpage/jetpack-compose-navegando-telas-navigation/task/119090")
 class MainActivity : ComponentActivity() {
 
@@ -50,11 +53,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             val initialScreen = "Destaques"
             val screens = remember {
                 mutableStateListOf(initialScreen)
             }
-            Log.i("MainActivity", "onCreate: screens ${screens.toList()}")
+            Log.i(TAG, "onCreate: navController - $navController")
+            Log.i(TAG, "onCreate: screens ${screens.toList()}")
             val currentScreen = screens.last()
             BackHandler(screens.size > 1) {
                 screens.removeLast()

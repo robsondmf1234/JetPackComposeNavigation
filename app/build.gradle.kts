@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.jetpackcomposenavigations"
         minSdk = 26
-        targetSdk = 37
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -50,8 +50,13 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
+    //AsyncImage
     implementation(libs.coil)
 
+    //Icons
     implementation(libs.androidx.compose.material.icons.extended)
+
+    //Navigation
+    implementation(libs.navigation)
 
 }
