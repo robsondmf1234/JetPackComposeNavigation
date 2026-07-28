@@ -32,7 +32,7 @@ import com.example.jetpackcomposenavigations.utils.bottomAppBarItems
 
 const val TAG = "MainActivity"
 
-//TODO("https://cursos.alura.com.br/classpage/jetpack-compose-navegando-telas-navigation/task/119090")
+//TODO("https://cursos.alura.com.br/classpage/jetpack-compose-navegando-telas-navigation/task/119092")
 class MainActivity : ComponentActivity() {
 
 
