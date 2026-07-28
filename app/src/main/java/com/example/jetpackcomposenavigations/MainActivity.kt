@@ -2,9 +2,7 @@ package com.example.jetpackcomposenavigations
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
@@ -23,7 +21,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,15 +29,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcomposenavigations.model.BottomAppBarItem
 import com.example.jetpackcomposenavigations.ui.components.PanucciBottomAppBar
-import com.example.jetpackcomposenavigations.ui.screens.CheckoutScreen
-import com.example.jetpackcomposenavigations.ui.screens.DrinksListScreen
-import com.example.jetpackcomposenavigations.ui.screens.HighlightsListScreen
-import com.example.jetpackcomposenavigations.ui.screens.MenuListScreen
-import com.example.jetpackcomposenavigations.ui.screens.ProductDetailsScreen
 import com.example.jetpackcomposenavigations.ui.theme.JetPackComposeNavigationsTheme
 import com.example.jetpackcomposenavigations.utils.bottomAppBarItems
-import com.example.jetpackcomposenavigations.utils.sampleProductWithImage
-import com.example.jetpackcomposenavigations.utils.sampleProducts
 
 const val TAG = "MainActivity"
 
@@ -48,22 +38,12 @@ const val TAG = "MainActivity"
 class MainActivity : ComponentActivity() {
 
 
-    @RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            val initialScreen = "Destaques"
-            val screens = remember {
-                mutableStateListOf(initialScreen)
-            }
-            Log.i(TAG, "onCreate: navController - $navController")
-            Log.i(TAG, "onCreate: screens ${screens.toList()}")
-            val currentScreen = screens.last()
-            BackHandler(screens.size > 1) {
-                screens.removeLast()
-            }
+            val currentScreen = ""
             JetPackComposeNavigationsTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -77,43 +57,15 @@ class MainActivity : ComponentActivity() {
                         bottomAppBarItemSelected = selectedItem ?: bottomAppBarItems.first(),
                         onBottomAppBarItemSelectedChange = {
                             selectedItem = it
-                            screens.add(it.label)
                         },
                         onFabClick = {
-                            screens.add("Pedido")
                         }) {
-                        when (currentScreen) {
-                            "Destaques" -> HighlightsListScreen(
-                                products = sampleProducts,
-                                onOrderClick = {
-                                    screens.add("Pedido")
-                                },
-                                onProductClick = {
-                                    screens.add("DetalhesProduto")
-                                }
-                            )
-
-                            "Menu" -> MenuListScreen(
-                                products = sampleProducts
-                            )
-
-                            "Bebidas" -> DrinksListScreen(
-                                products = sampleProducts + sampleProducts
-                            )
-
-                            "DetalhesProduto" -> ProductDetailsScreen(
-                                product = sampleProductWithImage
-                            )
-
-                            "Pedido" -> CheckoutScreen(products = sampleProducts)
-                        }
+                        //TODO Implementar o naviation
                     }
                 }
             }
         }
     }
-
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
