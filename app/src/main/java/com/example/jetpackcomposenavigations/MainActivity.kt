@@ -24,11 +24,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcomposenavigations.model.BottomAppBarItem
 import com.example.jetpackcomposenavigations.ui.components.PanucciBottomAppBar
+import com.example.jetpackcomposenavigations.ui.screens.HighlightsListScreen
+import com.example.jetpackcomposenavigations.ui.screens.MenuListScreen
 import com.example.jetpackcomposenavigations.ui.theme.JetPackComposeNavigationsTheme
 import com.example.jetpackcomposenavigations.utils.bottomAppBarItems
+import com.example.jetpackcomposenavigations.utils.sampleProducts
 
 const val TAG = "MainActivity"
 
@@ -41,24 +46,33 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            val currentScreen = ""
             JetPackComposeNavigationsTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var selectedItem by remember(currentScreen) {
-                        val item = bottomAppBarItems.find { currentScreen == it.label }
+                    var selectedItem by remember() {
+                        val item = bottomAppBarItems.first()
                         mutableStateOf(item)
                     }
                     PanucciApp(
-                        bottomAppBarItemSelected = selectedItem ?: bottomAppBarItems.first(),
+                        bottomAppBarItemSelected = selectedItem,
                         onBottomAppBarItemSelectedChange = {
                             selectedItem = it
                         },
                         onFabClick = {
                         }) {
-                        //TODO Implementar o naviation
+                        NavHost(
+                            navController = navController,
+                            startDestination = "home"
+                        ) {
+                            composable("home") {
+                                HighlightsListScreen(products = sampleProducts)
+                            }
+                            composable("menu") {
+                                MenuListScreen(products = sampleProducts)
+                            }
+                        }
                     }
                 }
             }
