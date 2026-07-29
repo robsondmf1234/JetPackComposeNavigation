@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcomposenavigations.model.BottomAppBarItem
 import com.example.jetpackcomposenavigations.ui.components.PanucciBottomAppBar
@@ -47,19 +48,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
+            val backStackState by navController.currentBackStackEntryAsState()
+            val currentDestination = backStackState?.destination
             JetPackComposeNavigationsTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var selectedItem by remember() {
-                        val item = bottomAppBarItems.first()
+                    var selectedItem by remember(currentDestination) {
+                        val item = currentDestination?.let { destination ->
+                            bottomAppBarItems.find {
+                                it.route == destination.route
+                            }
+                        } ?: bottomAppBarItems.first()
                         mutableStateOf(item)
                     }
                     PanucciApp(
                         bottomAppBarItemSelected = selectedItem,
                         onBottomAppBarItemSelectedChange = {
-                            selectedItem = it
                             val route = it.route
                             navController.navigate(route)
                         },
