@@ -18,7 +18,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,16 +29,16 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcomposenavigations.model.BottomAppBarItem
 import com.example.jetpackcomposenavigations.ui.components.PanucciBottomAppBar
+import com.example.jetpackcomposenavigations.ui.screens.DrinksListScreen
 import com.example.jetpackcomposenavigations.ui.screens.HighlightsListScreen
 import com.example.jetpackcomposenavigations.ui.screens.MenuListScreen
 import com.example.jetpackcomposenavigations.ui.theme.JetPackComposeNavigationsTheme
 import com.example.jetpackcomposenavigations.utils.bottomAppBarItems
 import com.example.jetpackcomposenavigations.utils.sampleProducts
-import kotlinx.coroutines.delay
 
 const val TAG = "MainActivity"
 
-//TODO("https://cursos.alura.com.br/classpage/jetpack-compose-navegando-telas-navigation/task/119094")
+//TODO("https://cursos.alura.com.br/classpage/jetpack-compose-navegando-telas-navigation/task/119095")
 class MainActivity : ComponentActivity() {
 
 
@@ -61,18 +60,23 @@ class MainActivity : ComponentActivity() {
                         bottomAppBarItemSelected = selectedItem,
                         onBottomAppBarItemSelectedChange = {
                             selectedItem = it
+                            val route = it.route
+                            navController.navigate(route)
                         },
                         onFabClick = {
                         }) {
                         NavHost(
                             navController = navController,
-                            startDestination = "home"
+                            startDestination = "highlight"
                         ) {
-                            composable("home") {
+                            composable("highlight") {
                                 HighlightsListScreen(products = sampleProducts)
                             }
                             composable("menu") {
                                 MenuListScreen(products = sampleProducts)
+                            }
+                            composable("drinks") {
+                                DrinksListScreen(products = sampleProducts)
                             }
                         }
                     }

@@ -4,5 +4,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 class BottomAppBarItem(
     val label: String,
-    val icon: ImageVector
+    val icon: ImageVector,
+    val route: String
 )
