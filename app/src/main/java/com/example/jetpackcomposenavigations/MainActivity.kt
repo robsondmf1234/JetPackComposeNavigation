@@ -1,6 +1,8 @@
 package com.example.jetpackcomposenavigations
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +20,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +51,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
+            LaunchedEffect(Unit) {
+                @SuppressLint("RestrictedApi")
+                navController.addOnDestinationChangedListener { _, _, _ ->
+                    val routes = navController.backQueue.map {
+                        it.destination.route
+                    }
+                    Log.i(TAG, "onCreate: - $routes")
+                }
+            }
             val backStackState by navController.currentBackStackEntryAsState()
             val currentDestination = backStackState?.destination
             JetPackComposeNavigationsTheme {
