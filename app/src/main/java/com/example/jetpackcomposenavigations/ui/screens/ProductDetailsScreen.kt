@@ -30,7 +30,7 @@ import com.example.jetpackcomposenavigations.utils.sampleProducts
 fun ProductDetailsScreen(
     product: Product,
     modifier: Modifier = Modifier,
-    onNavigateToCheckout:()-> Unit={}
+    onNavigateToCheckout: () -> Unit = {}
 ) {
     Column(
         modifier
