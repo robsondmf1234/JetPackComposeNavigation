@@ -87,14 +87,22 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                         onFabClick = {
-                             navController.navigate("checkout")
+                            navController.navigate("checkout")
                         }) {
                         NavHost(
                             navController = navController,
                             startDestination = "highlight"
                         ) {
                             composable("highlight") {
-                                HighlightsListScreen(products = sampleProducts)
+                                HighlightsListScreen(
+                                    products = sampleProducts,
+                                    onProductClick = {
+                                        navController.navigate("productDetails")
+                                    },
+                                    onOrderClick = {
+                                        navController.navigate("checkout")
+                                    }
+                                )
                             }
                             composable("menu") {
                                 MenuListScreen(products = sampleProducts)
