@@ -33,9 +33,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.jetpackcomposenavigations.model.BottomAppBarItem
 import com.example.jetpackcomposenavigations.ui.components.PanucciBottomAppBar
+import com.example.jetpackcomposenavigations.ui.screens.CheckoutScreen
 import com.example.jetpackcomposenavigations.ui.screens.DrinksListScreen
 import com.example.jetpackcomposenavigations.ui.screens.HighlightsListScreen
 import com.example.jetpackcomposenavigations.ui.screens.MenuListScreen
+import com.example.jetpackcomposenavigations.ui.screens.ProductDetailsScreen
 import com.example.jetpackcomposenavigations.ui.theme.JetPackComposeNavigationsTheme
 import com.example.jetpackcomposenavigations.utils.bottomAppBarItems
 import com.example.jetpackcomposenavigations.utils.sampleProducts
@@ -85,6 +87,7 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                         onFabClick = {
+                             navController.navigate("checkout")
                         }) {
                         NavHost(
                             navController = navController,
@@ -98,6 +101,12 @@ class MainActivity : ComponentActivity() {
                             }
                             composable("drinks") {
                                 DrinksListScreen(products = sampleProducts)
+                            }
+                            composable("productDetails") {
+                                ProductDetailsScreen(product = sampleProducts.random())
+                            }
+                            composable("checkout") {
+                                CheckoutScreen(products = sampleProducts)
                             }
                         }
                     }
