@@ -30,7 +30,8 @@ import com.example.jetpackcomposenavigations.utils.sampleProductWithoutImage
 fun HighlightProductCard(
     product: Product,
     modifier: Modifier = Modifier,
-    onOrderClick: () -> Unit = {}
+    onOrderClick: () -> Unit = {},
+    onNavigateToDetails:()-> Unit={}
 ) {
     Card(
         modifier
