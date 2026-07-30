@@ -42,7 +42,7 @@ import com.example.jetpackcomposenavigations.utils.sampleProducts
 
 const val TAG = "MainActivity"
 
-//TODO("https://cursos.alura.com.br/classpage/jetpack-compose-navegando-telas-navigation/task/119096")
+//TODO("https://cursos.alura.com.br/classpage/jetpack-compose-navegando-telas-navigation/task/119098")
 class MainActivity : ComponentActivity() {
 
 
