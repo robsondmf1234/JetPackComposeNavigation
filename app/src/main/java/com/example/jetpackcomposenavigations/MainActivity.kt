@@ -44,7 +44,7 @@ import com.example.jetpackcomposenavigations.utils.sampleProducts
 
 const val TAG = "MainActivity"
 
-//TODO("https://cursos.alura.com.br/classpage/jetpack-compose-navegando-telas-navigation/task/119124")
+//TODO("https://cursos.alura.com.br/classpage/jetpack-compose-navegando-telas-navigation/task/119099")
 class MainActivity : ComponentActivity() {
 
 
@@ -105,23 +105,28 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable("menu") {
-                                MenuListScreen(products = sampleProducts, onNavigateToDetails = {
-                                    navController.navigate("productDetails")
-                                })
+                                MenuListScreen(
+                                    products = sampleProducts,
+                                    onNavigateToDetails = {
+                                        navController.navigate("productDetails")
+                                    }
+                                )
                             }
                             composable("drinks") {
                                 DrinksListScreen(
                                     products = sampleProducts,
                                     onNavigateToDetails = {
                                         navController.navigate("productDetails")
-                                    })
+                                    }
+                                )
                             }
                             composable("productDetails") {
                                 ProductDetailsScreen(
                                     product = sampleProducts.random(),
                                     onNavigateToCheckout = {
                                         navController.navigate("checkout")
-                                    })
+                                    }
+                                )
                             }
                             composable("checkout") {
                                 CheckoutScreen(products = sampleProducts)
