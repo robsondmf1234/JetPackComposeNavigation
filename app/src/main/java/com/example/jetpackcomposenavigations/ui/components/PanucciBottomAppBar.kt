@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.jetpackcomposenavigations.model.BottomAppBarItem
+import com.example.jetpackcomposenavigations.navigation.bottomAppBarItems
 import com.example.jetpackcomposenavigations.ui.theme.JetPackComposeNavigationsTheme
-import com.example.jetpackcomposenavigations.utils.bottomAppBarItems
 
 @Composable
 fun PanucciBottomAppBar(
