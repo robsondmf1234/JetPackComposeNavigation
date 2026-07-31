@@ -55,8 +55,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val navController = rememberNavController()
             LaunchedEffect(Unit) {
-                @SuppressLint("RestrictedApi")
-                navController.addOnDestinationChangedListener { _, _, _ ->
+                @SuppressLint("RestrictedApi") navController.addOnDestinationChangedListener { _, _, _ ->
                     val routes = navController.backQueue.map {
                         it.destination.route
                     }
@@ -67,8 +66,7 @@ class MainActivity : ComponentActivity() {
             val currentDestination = backStackState?.destination
             JetPackComposeNavigationsTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     var selectedItem by remember(currentDestination) {
                         val item = currentDestination?.let { destination ->
@@ -77,6 +75,17 @@ class MainActivity : ComponentActivity() {
                             }
                         } ?: bottomAppBarItems.first()
                         mutableStateOf(item)
+                    }
+                    val containsInBottomAppBarItems = currentDestination?.let { destination ->
+                        bottomAppBarItems.find {
+                            it.destination.route == destination.route
+                        }
+                    } != null
+                    val isShowFab = when (currentDestination?.route) {
+                        AppDestination.Menu.route,
+                        AppDestination.Drinks.route -> true
+
+                        else -> false
                     }
                     PanucciApp(
                         bottomAppBarItemSelected = selectedItem,
@@ -89,7 +98,11 @@ class MainActivity : ComponentActivity() {
                         },
                         onFabClick = {
                             navController.navigate(AppDestination.Checkout.route)
-                        }) {
+                        },
+                        isShowTopBar = containsInBottomAppBarItems,
+                        isShowBottomBar = containsInBottomAppBarItems,
+                        isShowFab = isShowFab
+                    ) {
                         NavHost(
                             navController = navController,
                             startDestination = AppDestination.Highlight.route
@@ -102,32 +115,25 @@ class MainActivity : ComponentActivity() {
                                     },
                                     onNavigateToCheckout = {
                                         navController.navigate(AppDestination.Checkout.route)
-                                    }
-                                )
+                                    })
                             }
                             composable(AppDestination.Menu.route) {
                                 MenuListScreen(
-                                    products = sampleProducts,
-                                    onNavigateToDetails = {
+                                    products = sampleProducts, onNavigateToDetails = {
                                         navController.navigate(AppDestination.ProductDetails.route)
-                                    }
-                                )
+                                    })
                             }
                             composable(AppDestination.Drinks.route) {
                                 DrinksListScreen(
-                                    products = sampleProducts,
-                                    onNavigateToDetails = {
+                                    products = sampleProducts, onNavigateToDetails = {
                                         navController.navigate(AppDestination.ProductDetails.route)
-                                    }
-                                )
+                                    })
                             }
                             composable(AppDestination.ProductDetails.route) {
                                 ProductDetailsScreen(
-                                    product = sampleProducts.random(),
-                                    onNavigateToCheckout = {
+                                    product = sampleProducts.random(), onNavigateToCheckout = {
                                         navController.navigate(AppDestination.Checkout.route)
-                                    }
-                                )
+                                    })
                             }
                             composable(AppDestination.Checkout.route) {
                                 CheckoutScreen(products = sampleProducts)
@@ -146,34 +152,38 @@ fun PanucciApp(
     bottomAppBarItemSelected: BottomAppBarItem = bottomAppBarItems.first(),
     onBottomAppBarItemSelectedChange: (BottomAppBarItem) -> Unit = {},
     onFabClick: () -> Unit = {},
+    isShowTopBar: Boolean = false,
+    isShowBottomBar: Boolean = false,
+    isShowFab: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    Scaffold(
-        topBar = {
+    Scaffold(topBar = {
+        if (isShowTopBar) {
             CenterAlignedTopAppBar(
                 title = {
                     Text(text = "Ristorante Panucci")
                 },
             )
-        },
-        bottomBar = {
+        }
+    }, bottomBar = {
+        if (isShowBottomBar) {
             PanucciBottomAppBar(
                 item = bottomAppBarItemSelected,
                 items = bottomAppBarItems,
                 onItemChange = onBottomAppBarItemSelectedChange,
             )
-        },
-        floatingActionButton = {
+        }
+    }, floatingActionButton = {
+        if (isShowFab) {
             FloatingActionButton(
                 onClick = onFabClick
             ) {
                 Icon(
-                    Icons.Filled.PointOfSale,
-                    contentDescription = null
+                    Icons.Filled.PointOfSale, contentDescription = null
                 )
             }
         }
-    ) {
+    }) {
         Box(
             modifier = Modifier.padding(it)
         ) {
